@@ -2,7 +2,7 @@ import { applyAction } from '$app/forms';
 import { goto } from '$app/navigation';
 import { Passlock, type PasslockProps } from '@passlock/client';
 import type { SubmitFunction } from '@sveltejs/kit';
-import { onMount } from 'svelte';
+import { effect } from 'svelte';
 import { writable } from 'svelte/store';
 
 export type LoginProps = PasslockProps & {
@@ -14,8 +14,8 @@ export const login = (options: LoginProps) => {
 	const submitting = writable(false);
 	const mappings = options.mappings ?? { email: 'email' };
 
-	onMount(async () => {
-		await passlock.preConnect();
+	effect(() => {
+		passlock.preConnect();
 	});
 
 	return {

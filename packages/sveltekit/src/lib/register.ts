@@ -2,7 +2,7 @@ import { applyAction } from '$app/forms';
 import { goto } from '$app/navigation';
 import { Passlock, type PasslockProps } from '@passlock/client';
 import type { SubmitFunction } from '@sveltejs/kit';
-import { onMount } from 'svelte';
+import { effect } from 'svelte';
 import { writable } from 'svelte/store';
 
 export type RegisterProps = PasslockProps & {
@@ -19,8 +19,8 @@ export const register = (options: RegisterProps) => {
 		familyName: 'familyName'
 	};
 
-	onMount(async () => {
-		await passlock.preConnect();
+	effect(() => {
+		passlock.preConnect();
 	});
 
 	return {
